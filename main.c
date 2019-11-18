@@ -3,6 +3,7 @@
 #include <dirent.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <string.h>
 
 int main() {
   DIR *ret1 =  opendir(".");
@@ -13,12 +14,19 @@ int main() {
   printf("Directory being read: %s\n", dst->d_name);
   struct stat ind;
   while(dst != NULL) {
-    dst = readdir(ret1);
     fn = dst->d_name;
     printf("File: %s\n", fn);
+    if((int)dst->d_type == 4) {
+      printf("File type: Directory\n");
+    }
+    else {
+      printf("File type: Regular File\n");
+    }
     stat(fn, &ind);
+    printf("File size: %d bytes\n\n", ind.st_size);
     sz += ind.st_size;
+    dst = readdir(ret1);
   }
-  printf("Size of dir: %d\n", sz);
+  printf("--------\nSize of dir: %d bytes\n", sz);
   return 0;
 }
