@@ -12,7 +12,8 @@ int main() {
   char *fn;
   printf("Directory being read: %s\n", dst->d_name);
   struct stat ind;
-  while((dst = readdir(".")) != NULL) {
+  while(dst != NULL) {
+    dst = readdir(ret1);
     fn = dst->d_name;
     printf("File: %s\n", fn);
     stat(fn, &ind);
