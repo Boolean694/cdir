@@ -3,6 +3,7 @@
 #include <dirent.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <errno.h>
 #include <string.h>
 
 int main(int argc, char *argv[]) {
@@ -16,14 +17,15 @@ int main(int argc, char *argv[]) {
     dirn = argv[1];
   }
   DIR *ret1 = opendir(dirn);
-  if(ret1 == NULL) {
-    printf("Invalid entry");
+  if(errno != 0) {
+    printf("Invalid entry (suggested entries: . or ..)");
+    return 0;
   }
   struct dirent *dst;
   dst = readdir(ret1);
   int sz = 0;
   char *fn;
-  printf("Directory being read: %s\n", dst->d_name);
+  printf("\nReading directory: %s\n\n", dst->d_name);
   struct stat ind;
   while(dst != NULL) {
     fn = dst->d_name;
