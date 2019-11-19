@@ -5,8 +5,8 @@
 #include <sys/types.h>
 #include <string.h>
 
-int main() {
-  DIR *ret1 =  opendir(".");
+int main(int argc, char *argv[]) {
+  DIR *ret1 =  opendir(argv[0]);
   struct dirent *dst;
   dst = readdir(ret1);
   int sz = 0;
